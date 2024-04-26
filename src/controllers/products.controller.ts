@@ -4,14 +4,13 @@ import { Products } from '@interfaces/products.interface';
 import { ProductService } from '@services/products.services';
 
 export class ProductController {
-
   public product = Container.get(ProductService);
 
   public getProducts = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const findAllProductsData: Products[] = await this.product.findAllProduct();
+      const findAllProductdata: Products[] = await this.product.findAllProduct();
 
-      res.status(200).json({ data: findAllProductsData, message: 'findAll' });
+      res.status(200).json({ data: findAllProductdata, message: 'findAll' });
     } catch (error) {
       next(error);
     }
@@ -20,18 +19,18 @@ export class ProductController {
   public getProductById = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const product_id: string = req.params.id;
-      const findOneProductData: Products = await this.product.findProductById(product_id);
+      const productData: Products=req.body;
+      const findOneProductData: Products = await this.product.findProductById(product_id,productData);
 
       res.status(200).json({ data: findOneProductData, message: 'findOne' });
     } catch (error) {
       next(error);
     }
   };
-
   public createProduct = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const productData: Products = req.body;
-      const createProductData: Products = await this.product.createProduct(productData);
+      const ProductData: Products = req.body;
+      const createProductData: Products = await this.product.createProduct(ProductData);
 
       res.status(201).json({ data: createProductData, message: 'created' });
     } catch (error) {
@@ -54,7 +53,8 @@ export class ProductController {
   public deleteProduct = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const product_id: string = req.params.id;
-      const deleteProductData: Products = await this.product.deleteProduct(product_id);
+      const productData: Products=req.body;
+      const deleteProductData: Products = await this.product.deleteProduct(product_id,productData);
 
       res.status(200).json({ data: deleteProductData, message: 'deleted' });
     } catch (error) {

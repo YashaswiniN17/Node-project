@@ -11,12 +11,10 @@ export class ProductService {
     return users;
   }
 
-  public async findProductById(productId: string): Promise<Products> {
-    const findProductById: Products = await ProductModel.findOne({ _id: productId });
-    if (!findProductById) throw new HttpException(409, "Product doesn't exist");
+  public async findProductById(_id: string,productData:Products): Promise<Products> {
+    const findproduct: Products = await ProductModel.findOne({ _id: productData.product_id });
 
-    return findProductById
-  
+    return findproduct;
   }
 
   public async createProduct(productData: Products): Promise<Products> {
@@ -30,19 +28,14 @@ export class ProductService {
   }
 
   public async updateProduct(_id: string, productData: Products): Promise<Products> {
-    if (productData.product_name) {
-      const findProduct: Products = await ProductModel.findOne({ product_name: productData.product_name });
-      if (findProduct && findProduct.product_id != _id) throw new HttpException(409, `This product ${productData.product_name} already exists`);
-    }
-    const updateProductById: Products = await ProductModel.findByIdAndUpdate(_id, { productData });
-    if (!updateProductById) throw new HttpException(409, "Product doesn't exist");
-
+    
+    const updateProductById: Products = await ProductModel.findByIdAndUpdate( productData.product_id, { ...productData });
+   
     return updateProductById;
   }
 
-  public async deleteProduct(productId: string): Promise<Products> {
-    const deleteProductById: Products = await ProductModel.findByIdAndDelete(productId);
-    if (!deleteProductById) throw new HttpException(409, "Product doesn't exist");
+  public async deleteProduct(_id: string,productData:Products): Promise<Products> {
+    const deleteProductById: Products = await ProductModel.findByIdAndDelete(productData.product_id,{...productData});
 
     return deleteProductById;
   }

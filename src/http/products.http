@@ -26,9 +26,10 @@ Content-Type: application/json
 
 {
     "product_name": "car",
-    "quantity": "2"
+    "quantity": "2",
+    "isActive":true
 }
 
 ###
 # Delete Product By Id
-DELETE {{ baseURL }}/users/1
+DELETE {{ baseURL }}/products/1
