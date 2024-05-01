@@ -3,6 +3,7 @@ import { Container } from 'typedi';
 import { Products } from '@interfaces/products.interface';
 import { ProductService } from '@services/products.services';
 import { randomUUID } from 'crypto';
+import  json2csv  from 'json2csv';
 
 export class ProductController {
   public product = Container.get(ProductService);
@@ -18,11 +19,14 @@ export class ProductController {
   };
   public getProductsCsv = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const findAllProductdata = await this.product.findAllProductResponse(req);
-      res.status(200).json(findAllProductdata);
-    } catch (error) {
+      const findAllProductdata: Products[] = await this.product.findAllProductCsv();
+      const csvData = json2csv.parse(findAllProductdata, { fields: ['product_id', 'product_name', 'quantity','isActive'] }); 
+      res.setHeader('Content-Type', 'text/csv');
+      res.setHeader('Content-Disposition', 'inline; filename=products.csv');
+      res.status(200).send(csvData);
+  } catch (error) {
       next(error);
-    }
+  }
   };
 
   public getProductById = async (req: Request, res: Response, next: NextFunction) => {

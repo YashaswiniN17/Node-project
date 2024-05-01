@@ -8,23 +8,12 @@ import { exit } from 'process';
 @Service()
 export class ProductService {
   public async findAllProduct(): Promise<Products[]> {
-    const users: Products[] = await ProductModel.find();
-    return users;
+    const products: Products[] = await ProductModel.find();
+    return products;
   }
-
-  public async findAllProductResponse(req: any): Promise<any> {
-    const data = await this.findAllProduct();
-
-    if (req.headers.accept && req.headers.accept.includes('text/csv')) {
-      const dataKeys = Object.keys(data[0]);
-      let csvContent = dataKeys.join(",") + "\n";
-      data.forEach(product => {
-          csvContent += dataKeys.map(key => product[key]).join(",") + "\n";
-      });
-      return { data: csvContent, message: 'findAll (CSV)' };
-    } else {
-      return { data, message: 'findAll' };
-    }
+  public async findAllProductCsv(): Promise<Products[]> {
+    const products: Products[] = await ProductModel.find();
+    return products;
   }
 
   public async findProductById(_Aid: string): Promise<Products> {
