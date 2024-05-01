@@ -15,9 +15,12 @@ export class ProductRoute implements Routes {
 
   private initializeRoutes() {
     this.router.get(`${this.path}/GetAllProducts`, this.products.getProducts);
-    this.router.get(`${this.path}/GetProductById`, this.products.getProductById);
+    this.router.get(`${this.path}/GetProductById/:Id`, this.products.getProductById);
     this.router.post(`${this.path}/PostProduct`, this.products.createProduct);
-    this.router.put(`${this.path}/PutProduct`, this.products.updateProduct);
-    this.router.delete(`${this.path}/DeleteProduct`, this.products.deleteProduct);
+    this.router.put(`${this.path}/PutProduct/:Id`, this.products.updateProduct);
+    this.router.delete(`${this.path}/DeleteProduct/:id`, this.products.deleteProduct);
+    this.router.put(`${this.path}/ChangeActiveStatus/:Id`, this.products.setIsActive);
+    this.router.get(`${this.path}/GetAllProductsCsv`, this.products.getProductsCsv);
+
   }
 }

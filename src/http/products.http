@@ -7,7 +7,7 @@ GET {{ baseURL }}/products
 
 ###
 # Find Products By Id
-GET {{ baseURL }}/products/1
+GET {{ baseURL }}/products
 
 ###
 # Create Product
@@ -17,11 +17,12 @@ Content-Type: application/json
 {
     "product_name": "car",
     "quantity": "2"
+    "isActive":true
 }
 
 ###
 # Modify Product By Id
-PUT {{ baseURL }}/products/1
+PUT {{ baseURL }}/products/PutProduct
 Content-Type: application/json
 
 {
@@ -32,4 +33,9 @@ Content-Type: application/json
 
 ###
 # Delete Product By Id
-DELETE {{ baseURL }}/products/1
+DELETE {{ baseURL }}/products
+
+###
+
+# Change isActive Status
+PUT {{ baseURL }}/products
